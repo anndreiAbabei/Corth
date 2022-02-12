@@ -133,7 +133,10 @@ public class CorthParser : ICorthParser
     private CorthToken CreateToken(string tokenStr, int line, int col, string file)
     {
         var position = CreateFilePosition(tokenStr, line, col, file);
-        var token = _tokenParser.Parse(tokenStr, position);
+        
+        //todo improve performance
+        if (!_tokenParser.TryParseFullLine(tokenStr, out var token, position))
+            token = _tokenParser.Parse(tokenStr, position);
 
         token.Position = position;
 

@@ -27,4 +27,5 @@ public static class ErrorCodes
     public const int RuntimeOperationInvalidType = 0x1002;
     public const int RuntimeInvalidIfConstruction = 0x1003;
     public const int RuntimeStackInvalidSize = 0x1004;
+    public const int RuntimeInvalidLoopConstruction = 0x1005;
 }

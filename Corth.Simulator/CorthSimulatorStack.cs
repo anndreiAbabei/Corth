@@ -1,19 +1,24 @@
+using System.Diagnostics.CodeAnalysis;
 using Corth.Core;
 using Corth.Core.Exceptions;
 using Corth.Core.Values;
-using Microsoft.Extensions.Logging;
 
 namespace Corth.Simulator;
 
+[SuppressMessage("Performance", "CA1822:Mark members as static")]
 public class CorthSimulatorStack : ICorthStack
 {
-    private readonly Stack<CorthValue> _stack;
+    private readonly SimulatorStack<CorthValue> _stack;
 
     public CorthSimulatorStack()
     {
-        _stack = new Stack<CorthValue>();
+        _stack = new SimulatorStack<CorthValue>();
     }
-    
+
+    public void Nop()
+    {
+    }
+
     public void Dump()
     {
         EnsureStackSize(1);
@@ -21,6 +26,16 @@ public class CorthSimulatorStack : ICorthStack
         var value = _stack.Pop();
         
         Console.Write(value.ToString());
+    }
+
+    public void Duplicate()
+    {
+        EnsureStackSize(1);
+        
+        var value = _stack.Pop();
+        
+        _stack.Push(value);
+        _stack.Push(value);
     }
 
     public void Push(int value)
@@ -136,6 +151,19 @@ public class CorthSimulatorStack : ICorthStack
     }
 
     public void EndIf()
+    {
+    }
+
+    public void Loop(out bool result)
+    {
+        EnsureStackSize(1);
+
+        var val = _stack.Pop();
+
+        result = ConvertValue<BoolValue>(val, "bool").Equals(BoolValue.True);
+    }
+
+    public void EndLoop()
     {
     }
 

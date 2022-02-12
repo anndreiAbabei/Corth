@@ -9,3 +9,11 @@ else
     6
 endif
 .
+
+0 true
+
+loop 
+    dup . ;;test
+    1 + dup
+    5 >
+endloop

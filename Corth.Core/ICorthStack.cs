@@ -2,7 +2,9 @@ namespace Corth.Core;
 
 public interface ICorthStack
 {
+    void Nop();
     void Dump();
+    void Duplicate();
     void Push(int value);
     void Push(string value);
     void Push(bool value);
@@ -16,4 +18,6 @@ public interface ICorthStack
     void If(out bool result);
     void Else();
     void EndIf();
+    void Loop(out bool result);
+    void EndLoop();
 }

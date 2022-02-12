@@ -8,7 +8,10 @@ public static class CorthTokens
     public static class Symbols
     {
         public const string Dump = ".";
+        public const string Duplicate = "dup";
+        
         public const string Comment = ";;";
+        
         public const string Add = "+";
         public const string Subtract = "-";
         public const string Multiply = "*";
@@ -21,10 +24,13 @@ public static class CorthTokens
         public const string If = "if";
         public const string Else = "else";
         public const string EndIf = "endif";
+        
+        public const string Loop = "loop";
+        public const string EndLoop = "endloop";
 
         public const string Str = "'";
-        public const string True = "True";
-        public const string False = "False";
+        public const string True = "true";
+        public const string False = "false";
     }
 
     public static CorthToken None { get; } = new NoneToken();
@@ -32,6 +38,7 @@ public static class CorthTokens
     public static CorthToken Numeral(int result) => new NumeralToken(result);
 
     public static CorthToken Dump() => new DumpToken();
+    public static CorthToken Duplicate() => new DuplicateToken();
 
     public static CorthToken Comment(string comment) => new CommentToken(comment);
 
@@ -50,6 +57,9 @@ public static class CorthTokens
     public static CorthToken If() => new IfToken();
     public static CorthToken Else() => new ElseToken();
     public static CorthToken EndIf() => new EndIfToken();
+
+    public static CorthToken Loop() => new LoopToken();
+    public static CorthToken EndLoop() => new EndLoopToken();
 
     public static CorthToken String(string str) => new StringToken(str);
     public static CorthToken True() => Bool(true);

@@ -33,10 +33,13 @@ public class CorthTokenParser : ICorthTokenParser
             CorthTokens.Symbols.If => CorthTokens.If(),
             CorthTokens.Symbols.Else => CorthTokens.Else(),
             CorthTokens.Symbols.EndIf => CorthTokens.EndIf(),
+            
+            CorthTokens.Symbols.Loop => CorthTokens.Loop(),
+            CorthTokens.Symbols.EndLoop => CorthTokens.EndLoop(),
             // CorthTokens.Symbols.While => CorthToken.While(),
             // CorthTokens.Symbols.Do => CorthToken.Do(),
             //     
-            // CorthTokens.Symbols.Duplicate => CorthToken.Dup(),
+            CorthTokens.Symbols.Duplicate => CorthTokens.Duplicate(),
             CorthTokens.Symbols.Dump => CorthTokens.Dump(),
                 
             // CorthTokens.Symbols.Ret => CorthToken.Ret(),
