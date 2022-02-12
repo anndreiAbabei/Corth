@@ -1,11 +1,10 @@
 using System;
-using Corth.Core.Exceptions;
 
 namespace Corth.Core.Values;
 
 public class IntValue : CorthValue
 {
-    public int Value { get; }
+    private int Value { get; }
 
     public override string Type => "int";
 
@@ -49,16 +48,16 @@ public class IntValue : CorthValue
         return Perform(value, (a, b) => a < b);
     }
 
-    protected CorthValue Perform(CorthValue value, Func<int, int, int> operation)
+    private CorthValue Perform(CorthValue value, Func<int, int, int> operation)
     {
-        return new IntValue(operation(Value, value.ConvertValue<IntValue>(Type).Value)); 
+        return new IntValue(operation(Value, value.ConvertValue<IntValue>(Type).Value));
     }
 
-    protected CorthValue Perform(CorthValue value, Func<int, int, bool> operation)
+    private CorthValue Perform(CorthValue value, Func<int, int, bool> operation)
     {
         return operation(Value, value.ConvertValue<IntValue>(Type).Value)
-            ? BoolValue.True
-            : BoolValue.False;
+                   ? BoolValue.True
+                   : BoolValue.False;
     }
 
     public override string ToString() => Value.ToString();

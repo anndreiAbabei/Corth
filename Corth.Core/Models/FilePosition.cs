@@ -2,11 +2,11 @@ namespace Corth.Core.Models;
 
 public class FilePosition
 {
-    public string? File { get; set; }
+    public string? File { get; init; }
     
-    public TextPosition? Start { get; set; }
+    public TextPosition? Start { get; init; }
     
-    public TextPosition? End { get; set; }
+    public TextPosition? End { get; init; }
     
     public FilePosition(string? file = null, TextPosition? start = null, TextPosition? end = null)
     {
@@ -20,15 +20,15 @@ public class FilePosition
 
 public class TextPosition
 {
-    public int Line { get; set; }
-    
-    public int Column { get; set; }
-    
+    public int Line { get; init; }
+
+    public int Column { get; init; }
+
     public TextPosition()
     {
-        
+
     }
-    
+
     public TextPosition(int line, int column)
     {
         Line = line;

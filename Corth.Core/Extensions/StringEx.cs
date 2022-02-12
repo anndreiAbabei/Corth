@@ -10,10 +10,10 @@ internal static class StringEx
     {
         if (string.IsNullOrEmpty(source))
             return 1;
-        
+
         int index = -1,
             count = 1;
-        
+
         while ((index = source.IndexOf(Environment.NewLine, index + 1, StringComparison.Ordinal)) != -1)
             count++;
 
@@ -22,9 +22,9 @@ internal static class StringEx
 
     internal static string LastLine(this string source)
     {
-        return string.IsNullOrEmpty(source) 
-            ? source 
-            : source.Split(Environment.NewLine).Last();
+        return string.IsNullOrEmpty(source)
+                   ? source
+                   : source.Split(Environment.NewLine).Last();
     }
 
     internal static TextPosition GetEndPosition(this string source, TextPosition? start = null)
@@ -36,8 +36,8 @@ internal static class StringEx
         {
             Line = start.Line + lines - 1,
             Column = lines > 1
-                ? source.LastLine().Length
-                : start.Column + source.Length
+                         ? source.LastLine().Length
+                         : start.Column + source.Length
         };
     }
 }

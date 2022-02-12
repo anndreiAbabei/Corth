@@ -18,18 +18,18 @@ public class SimulatorStack<T>
     public void Push(T item, [CallerMemberName] string caller = "")
     {
         _stack.Push(item);
-        
-        if(_log)
+
+        if (_log)
             Console.WriteLine($"[{caller}] Pushed: {item} \t\t\t [Stack: {{{PrintStack()}}}]");
     }
 
     public T Pop([CallerMemberName] string caller = "")
     {
         var item = _stack.Pop();
-        
-        if(_log)
+
+        if (_log)
             Console.WriteLine($"[{caller}] Popped: {item} \t\t\t [Stack: {{{PrintStack()}}}]");
-        
+
         return item;
     }
 

@@ -9,22 +9,22 @@ public static class CorthTokens
     {
         public const string Dump = ".";
         public const string Duplicate = "dup";
-        
+
         public const string Comment = ";;";
-        
+
         public const string Add = "+";
         public const string Subtract = "-";
         public const string Multiply = "*";
         public const string Divide = "/";
-        
+
         public const string Eq = "=";
         public const string Gt = ">";
         public const string Lt = "<";
-        
+
         public const string If = "if";
         public const string Else = "else";
         public const string EndIf = "endif";
-        
+
         public const string Loop = "loop";
         public const string EndLoop = "endloop";
 
@@ -43,11 +43,11 @@ public static class CorthTokens
     public static CorthToken Comment(string comment) => new CommentToken(comment);
 
     public static CorthToken Add() => new AddToken();
-    
+
     public static CorthToken Subtract() => new SubtractToken();
-    
+
     public static CorthToken Multiply() => new MultiplyToken();
-    
+
     public static CorthToken Divide() => new DivideToken();
 
     public static CorthToken Equals() => new EqualsToken();
@@ -64,5 +64,7 @@ public static class CorthTokens
     public static CorthToken String(string str) => new StringToken(str);
     public static CorthToken True() => Bool(true);
     public static CorthToken False() => Bool(false);
-    public static CorthToken Bool(bool value) => new BoolToken(value);
+    
+    
+    private static CorthToken Bool(bool value) => new BoolToken(value);
 }

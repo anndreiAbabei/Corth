@@ -20,12 +20,13 @@ public class CorthParser : ICorthParser
     {
         _tokenParser = tokenParser;
     }
-    
-    public async ValueTask<IEnumerable<CorthToken>> Parse(ICorthProgram program, CancellationToken cancellationToken = default)
+
+    public async ValueTask<IEnumerable<CorthToken>> Parse(ICorthProgram program,
+                                                          CancellationToken cancellationToken = default)
     {
         if (program.Files == null)
             return Enumerable.Empty<CorthToken>();
-        
+
         var tokens = new List<CorthToken>();
 
         foreach (var file in program.Files)
@@ -39,13 +40,13 @@ public class CorthParser : ICorthParser
         return tokens;
     }
 
-    private async ValueTask ParseFile(CorthFile file, 
-        ICollection<CorthToken> tokens,
-        CancellationToken cancellationToken = default)
+    private async ValueTask ParseFile(CorthFile file,
+                                      ICollection<CorthToken> tokens,
+                                      CancellationToken cancellationToken = default)
     {
         using var sr = new StreamReader(file.Content);
         var lineNo = 0;
-        
+
         while (!sr.EndOfStream)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -59,7 +60,7 @@ public class CorthParser : ICorthParser
 
     private void ParseLine(string? line, int lineNo, string file, ICollection<CorthToken> tokens)
     {
-        if(string.IsNullOrWhiteSpace(line))
+        if (string.IsNullOrWhiteSpace(line))
             return;
 
         var sb = new StringBuilder();
@@ -67,10 +68,10 @@ public class CorthParser : ICorthParser
         var inString = false;
 
         line += ' ';
-        
+
         if (IsFullLineToken(line, lineNo, tokens, file))
             return;
-    
+
         for (var i = 0; i < line.Length; i++)
         {
             var chr = line[i];
@@ -102,7 +103,7 @@ public class CorthParser : ICorthParser
             {
                 if (colPos < 0)
                     colPos = i;
-                
+
                 sb.Append(chr);
             }
         }
@@ -112,7 +113,7 @@ public class CorthParser : ICorthParser
             var lastPosition = tokens.LastOrDefault()?.Position?.End ?? new TextPosition(lineNo, 0);
             var str = sb.ToString();
             var pos = new FilePosition(file, lastPosition, str.GetEndPosition(lastPosition));
-            
+
             throw new CorthInvalidEndProgram(str).WithPosition(pos);
         }
     }
@@ -133,7 +134,7 @@ public class CorthParser : ICorthParser
     private CorthToken CreateToken(string tokenStr, int line, int col, string file)
     {
         var position = CreateFilePosition(tokenStr, line, col, file);
-        
+
         //todo improve performance
         if (!_tokenParser.TryParseFullLine(tokenStr, out var token, position))
             token = _tokenParser.Parse(tokenStr, position);
@@ -148,7 +149,7 @@ public class CorthParser : ICorthParser
         var token = CorthTokens.String(Regex.Unescape(text));
 
         SetPosToToken(token, line, col, file);
-        
+
         return token;
     }
 
@@ -157,11 +158,15 @@ public class CorthParser : ICorthParser
         token.Position = CreateFilePosition(token.ToString(), line, col, file, token.IsMultiLine);
     }
 
-    private static FilePosition CreateFilePosition(string text, int line, int col, string file, bool? isMultiline = null)
+    private static FilePosition CreateFilePosition(string text,
+                                                   int line,
+                                                   int col,
+                                                   string file,
+                                                   bool? isMultiline = null)
     {
         int? linesCount = null;
         var iml = isMultiline ?? (linesCount = text.CountLines()) > 1;
-        
+
         return new FilePosition
         {
             File = file,
@@ -169,11 +174,11 @@ public class CorthParser : ICorthParser
             End = new TextPosition
             {
                 Line = iml
-                    ? line + (linesCount ?? text.CountLines())
-                    : line,
+                           ? line + (linesCount ?? text.CountLines())
+                           : line,
                 Column = iml
-                    ? text.LastLine().Length
-                    : line + text.Length
+                             ? text.LastLine().Length
+                             : line + text.Length
             }
         };
     }

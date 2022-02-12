@@ -10,12 +10,14 @@ namespace Corth;
 
 internal static class CorthEx
 {
-    internal static async ValueTask<int> Run(this ICorthSimulator sim, string file, CancellationToken cancellationToken = default)
+    internal static async ValueTask<int> Run(this ICorthSimulator sim,
+                                             string file,
+                                             CancellationToken cancellationToken = default)
     {
         if (sim == null)
             throw new ArgumentNullException(nameof(sim));
-        
-        if (string.IsNullOrEmpty(file)) 
+
+        if (string.IsNullOrEmpty(file))
             throw new ArgumentNullException(nameof(file));
 
         if (!File.Exists(file))
@@ -23,16 +25,17 @@ internal static class CorthEx
 
         var program = new CorthProgramSource(file);
         var runtime = await sim.Compile(program, cancellationToken)
-            .ConfigureAwait(false);
-        
+                               .ConfigureAwait(false);
+
         return runtime.Run();
     }
-    internal static void Compile(this ICorthCompiler sim, string file)
+
+    internal static void Compile(this ICorthCompiler compiler, string file)
     {
-        if (sim == null)
-            throw new ArgumentNullException(nameof(sim));
-    
-        if (string.IsNullOrEmpty(file)) 
+        if (compiler == null)
+            throw new ArgumentNullException(nameof(compiler));
+
+        if (string.IsNullOrEmpty(file))
             throw new ArgumentNullException(nameof(file));
 
         if (!File.Exists(file))

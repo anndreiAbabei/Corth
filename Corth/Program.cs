@@ -18,8 +18,8 @@ builder.Services.AddSingleton<ICorthSimulatedRuntime, CorthSimulatedRuntime>();
 
 builder.Services.AddSingleton<ICorthCompiler, CorthCompiler>();
 
-builder.Logging.AddConsoleFormatter<CorthLogConsoleFormatter, CorthLogConsoleFormaterOptions>()
-    .AddConsole(options => options.FormatterName = CorthLogConsoleFormatter.UseName);
+builder.Logging.AddConsoleFormatter<CorthLogConsoleFormatter, CorthLogConsoleFormatterOptions>()
+       .AddConsole(options => options.FormatterName = CorthLogConsoleFormatter.UseName);
 
 var app = builder.Build();
 

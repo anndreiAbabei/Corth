@@ -7,6 +7,6 @@ public class CorthProgramNotLoadedException : CorthException
     public CorthProgramNotLoadedException()
         : base(ErrorCodes.CorthProgramNotLoaded)
     {
-        
+
     }
 }

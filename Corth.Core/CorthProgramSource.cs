@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ namespace Corth.Core;
 public interface ICorthProgramSource
 {
     string MainFile { get; }
-    
+
     ValueTask<ICorthProgram> CreateProgram(CancellationToken cancellationToken = default);
 }
 
@@ -22,12 +21,12 @@ public class CorthProgramSource : ICorthProgramSource
     {
         MainFile = mainFile;
     }
-    
+
     public ValueTask<ICorthProgram> CreateProgram(CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(MainFile) || !File.Exists(MainFile))
             throw new CorthFileNotFoundException(MainFile);
-        
+
         //todo: read imports and get all files
 
         var program = new CorthProgram();

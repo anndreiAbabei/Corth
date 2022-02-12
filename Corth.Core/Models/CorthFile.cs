@@ -10,7 +10,7 @@ public class CorthFile : IDisposable, IAsyncDisposable
     public string Path { get; set; }
 
     public Stream Content { get; set; }
-    
+
 
     public CorthFile(string path, Stream content)
     {
@@ -30,7 +30,7 @@ public class CorthFile : IDisposable, IAsyncDisposable
             Content.Dispose();
         }
     }
-    
+
     protected virtual async ValueTask DisposeAsync(bool disposing)
     {
         if (disposing)

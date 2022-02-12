@@ -11,7 +11,7 @@ public class CorthSimulatedRuntime : ICorthSimulatedRuntime
     private readonly ILogger<CorthSimulatedRuntime> _logger;
     private IList<CorthToken>? _tokens;
 
-    public const int Success = 0;
+    private const int Success = 0;
 
     public bool Loaded => _tokens != null;
 

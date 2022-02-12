@@ -1,28 +1,27 @@
 using Corth.Core.Exceptions;
 using Corth.Core.Extensions;
-using Corth.Core.Models;
 using Corth.Core.Tokens.Blocks;
 
 namespace Corth.Core.Tokens;
 
 public class IfToken : CorthToken, ICorthBlockToken
 {
-    public ElseToken? ElseToken { get; set; }
-    
-    public EndIfToken? EndToken { get; set; }
-    
+    private ElseToken? ElseToken { get; set; }
+
+    private EndIfToken? EndToken { get; set; }
+
     public override string Operation => CorthTokens.Symbols.If;
-    
+
     public override void Execute(ICorthStack stack, ref int index)
     {
         if (ElseToken == null && EndToken == null)
             throw new CorthRuntimeInvalidIfConstruction("Missing End token").WithPosition(Position);
-            
+
         stack.If(out var result);
 
         if (result)
         {
-            if (ElseToken != null) 
+            if (ElseToken != null)
                 ElseToken.Skip = true;
         }
         else
@@ -48,11 +47,11 @@ public class IfToken : CorthToken, ICorthBlockToken
 public class ElseToken : CorthToken, ICorthBlockToken, ICorthEndToken
 {
     public bool Skip { get; set; }
-    
-    public EndIfToken? EndToken { get; set; }
-    
+
+    private EndIfToken? EndToken { get; set; }
+
     public override string Operation => CorthTokens.Symbols.Else;
-    
+
     public override void Execute(ICorthStack stack, ref int index)
     {
         if (EndToken == null)
@@ -62,17 +61,17 @@ public class ElseToken : CorthToken, ICorthBlockToken, ICorthEndToken
         {
             index = EndToken.Index;
         }
-        
+
         stack.Else();
     }
 
     public bool Accept(ICorthEndToken endToken, ref int index)
     {
-        if (endToken is not EndIfToken eit) 
+        if (endToken is not EndIfToken eit)
             return false;
-        
+
         EndToken = eit;
-        
+
         return true;
     }
 }

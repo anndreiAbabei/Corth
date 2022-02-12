@@ -16,11 +16,13 @@ internal class CorthLogConsoleFormatter : ConsoleFormatter
     }
 
 
-    public override void Write<TState>(in LogEntry<TState> logEntry, IExternalScopeProvider scopeProvider, TextWriter textWriter)
+    public override void Write<TState>(in LogEntry<TState> logEntry,
+                                       IExternalScopeProvider scopeProvider,
+                                       TextWriter textWriter)
     {
-        if (logEntry.Formatter == null) 
+        if (logEntry.Formatter == null)
             return;
-        
+
         var message = logEntry.Formatter(logEntry.State, logEntry.Exception);
 
         Console.WriteLine(message);

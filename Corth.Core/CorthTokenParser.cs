@@ -7,12 +7,12 @@ namespace Corth.Core;
 
 public class CorthTokenParser : ICorthTokenParser
 {
-        public CorthToken Parse(string operation, FilePosition? position = null)
+    public CorthToken Parse(string operation, FilePosition? position = null)
     {
         if (string.IsNullOrWhiteSpace(operation))
             return CorthTokens.None;
-        
-        
+
+
 
         if (int.TryParse(operation, out var num))
             return CorthTokens.Numeral(num);
@@ -26,14 +26,14 @@ public class CorthTokenParser : ICorthTokenParser
             CorthTokens.Symbols.Eq => CorthTokens.Equals(),
             CorthTokens.Symbols.Lt => CorthTokens.LessThan(),
             CorthTokens.Symbols.Gt => CorthTokens.GreaterThan(),
-            
+
             CorthTokens.Symbols.True => CorthTokens.True(),
             CorthTokens.Symbols.False => CorthTokens.False(),
-            
+
             CorthTokens.Symbols.If => CorthTokens.If(),
             CorthTokens.Symbols.Else => CorthTokens.Else(),
             CorthTokens.Symbols.EndIf => CorthTokens.EndIf(),
-            
+
             CorthTokens.Symbols.Loop => CorthTokens.Loop(),
             CorthTokens.Symbols.EndLoop => CorthTokens.EndLoop(),
             // CorthTokens.Symbols.While => CorthToken.While(),
@@ -41,7 +41,7 @@ public class CorthTokenParser : ICorthTokenParser
             //     
             CorthTokens.Symbols.Duplicate => CorthTokens.Duplicate(),
             CorthTokens.Symbols.Dump => CorthTokens.Dump(),
-                
+
             // CorthTokens.Symbols.Ret => CorthToken.Ret(),
             _ => throw new InvalidCorthTokenException(operation).WithPosition(position)
         };
@@ -63,7 +63,7 @@ public class CorthTokenParser : ICorthTokenParser
 
     public CorthToken ParseFullLine(string line, FilePosition? position = null)
     {
-        
+
         if (string.IsNullOrWhiteSpace(line))
             return CorthTokens.None;
 
@@ -74,7 +74,7 @@ public class CorthTokenParser : ICorthTokenParser
         //     return CorthToken.Metadata(first, remaining);
         // }
 
-        if(line.StartsWith(CorthTokens.Symbols.Comment))
+        if (line.StartsWith(CorthTokens.Symbols.Comment))
             return CorthTokens.Comment(line[CorthTokens.Symbols.Comment.Length..].Trim());
 
         throw new InvalidCorthTokenException(line).WithPosition(position);

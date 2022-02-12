@@ -1,9 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Corth.Core.Tokens;
 
 public class BoolToken : CorthToken
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public bool Value { get; }
-    
+
     public override string Operation => None;
 
     public BoolToken(bool value)

@@ -6,7 +6,7 @@ public class CorthFileNotFoundException : CorthException
 
     public override string Message => $"File {_file} not found";
 
-    public CorthFileNotFoundException(string file) 
+    public CorthFileNotFoundException(string file)
         : base(ErrorCodes.FileNotFound)
     {
         _file = file;

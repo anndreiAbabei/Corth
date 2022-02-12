@@ -16,13 +16,14 @@ public class CorthBuilder : ICorthBuilder
     {
         _parser = parser;
     }
-    
-    public async ValueTask<IEnumerable<CorthToken>> Build(ICorthProgram program, CancellationToken cancellationToken = default)
+
+    public async ValueTask<IEnumerable<CorthToken>> Build(ICorthProgram program,
+                                                          CancellationToken cancellationToken = default)
     {
         var tokens = await _parser.Parse(program, cancellationToken)
-            .ConfigureAwait(false);
+                                  .ConfigureAwait(false);
         var tokensLst = tokens as CorthToken[] ?? tokens.ToArray();
-        
+
         LinkBlockTokens(tokensLst);
 
         return tokensLst;
@@ -43,14 +44,14 @@ public class CorthBuilder : ICorthBuilder
             {
                 if (stack.Count <= 0)
                     throw new CorthInvalidEndBlockToken(token);
-                
+
                 var blkToken = stack.Peek();
 
                 if (blkToken.Accept(endToken, ref index))
                     stack.Pop();
             }
 
-            if(token is ICorthBlockToken blockToken)
+            if (token is ICorthBlockToken blockToken)
                 stack.Push(blockToken);
 
             if (prevToken is { Next: null })
