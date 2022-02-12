@@ -4,7 +4,7 @@ namespace Corth.Compiler;
 
 public class CorthCompiler : ICorthCompiler
 {
-    public ValueTask<ICorthRuntime> Build(ICorthProgramSource source, CancellationToken cancellationToken = default)
+    public ValueTask<ICorthRuntime> Compile(ICorthProgramSource source, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
+using Corth.Core.Models;
 
 namespace Corth.Core;
     
 public class CorthProgram : ICorthProgram
 {
-    public IEnumerable<Stream>? Files { get; set; }
+    public IEnumerable<CorthFile>? Files { get; set; }
 
     ~CorthProgram()
     {
@@ -19,8 +19,8 @@ public class CorthProgram : ICorthProgram
         if (!disposing || Files == null)
             return;
         
-        foreach (var stream in Files)
-            await stream.DisposeAsync().ConfigureAwait(false);
+        foreach (var file in Files)
+            await file.DisposeAsync().ConfigureAwait(false);
     }
     
     protected virtual void Dispose(bool disposing)
@@ -28,8 +28,8 @@ public class CorthProgram : ICorthProgram
         if (!disposing || Files == null)
             return;
 
-        foreach (var stream in Files) 
-            stream.Dispose();
+        foreach (var file in Files) 
+            file.Dispose();
     }
 
     public void Dispose()

@@ -7,53 +7,56 @@ namespace Corth.Simulator;
 
 public class CorthSimulatedRuntime : ICorthSimulatedRuntime
 {
+    private readonly ICorthBuilder _builder;
     private readonly ILogger<CorthSimulatedRuntime> _logger;
-    private readonly ICorthParser _parser;
     private IList<CorthToken>? _tokens;
 
     public const int Success = 0;
 
     public bool Loaded => _tokens != null;
 
-    public CorthSimulatedRuntime(ICorthParser parser, ILogger<CorthSimulatedRuntime> logger)
+    public CorthSimulatedRuntime(ICorthBuilder builder, ILogger<CorthSimulatedRuntime> logger)
     {
-        _parser = parser;
+        _builder = builder;
         _logger = logger;
     }
 
     public async ValueTask Load(ICorthProgram program, CancellationToken cancellationToken = default)
     {
         _tokens = null;
-        
-        var tokens = await _parser.Parse(program, cancellationToken)
-            .ConfigureAwait(false);
-        
+
+        var tokens = await _builder.Build(program, cancellationToken)
+                                   .ConfigureAwait(false);
+
         _tokens = tokens.ToList();
     }
-    
+
     public int Run()
     {
         try
         {
-            _logger.LogInformation("Started simulated runtime");
+            _logger.LogInformation("---Started simulated runtime---\n\n");
 
             if (!Loaded)
                 throw new CorthProgramNotLoadedException();
 
-            var index = 0;
             var stack = new CorthSimulatorStack();
-            
-            foreach (var token in _tokens!)
+
+            for (var index = 0; index < _tokens!.Count; index++)
             {
+                var token = _tokens![index];
+
                 token.Execute(stack, ref index);
-                index++;
             }
 
             return Success;
         }
         catch (CorthException ex)
         {
-            _logger.LogError(ex, "\n\nError occurred: {Message}", ex.Message);
+            _logger.LogError(ex, "\n\nError (0x{Code}) occurred: {Message}\t\t{Location}",
+                             ex.Code.ToString("X"),
+                             ex.Message,
+                             ex.Location);
 
             return ex.Code;
         }
@@ -65,7 +68,7 @@ public class CorthSimulatedRuntime : ICorthSimulatedRuntime
         }
         finally
         {
-            _logger.LogInformation("\n\nEnded simulated runtime");
+            _logger.LogInformation("\n\n---Ended simulated runtime---");
         }
     }
 }

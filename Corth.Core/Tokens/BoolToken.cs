@@ -12,4 +12,6 @@ public class BoolToken : CorthToken
     }
 
     public override void Execute(ICorthStack stack, ref int index) => stack.Push(Value);
+
+    public override string ToString() => Value.ToString();
 }

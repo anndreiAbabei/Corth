@@ -4,5 +4,5 @@ namespace Corth.Compiler;
 
 public interface ICorthCompiler
 {
-    ValueTask<ICorthRuntime> Build(ICorthProgramSource source, CancellationToken cancellationToken = default);
+    ValueTask<ICorthRuntime> Compile(ICorthProgramSource source, CancellationToken cancellationToken = default);
 }

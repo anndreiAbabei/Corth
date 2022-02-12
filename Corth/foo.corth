@@ -1,11 +1,11 @@
-﻿112 .
-
-60 9 + .
-
-7 76 - .
-
-2 2 * . 2 6 / .
-
-4 5 > .
-
-'aa ' ' b \' p ' + .
+﻿1
+True if 
+    False if
+        4
+    else 
+        5
+    endif
+else
+    6
+endif
+.

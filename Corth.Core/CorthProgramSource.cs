@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Corth.Core.Exceptions;
+using Corth.Core.Models;
 
 namespace Corth.Core;
 
@@ -31,7 +32,10 @@ public class CorthProgramSource : ICorthProgramSource
 
         var program = new CorthProgram();
 
-        program.Files = new[] { File.OpenRead(MainFile) };
+        program.Files = new[]
+        {
+            new CorthFile(MainFile, File.OpenRead(MainFile))
+        };
 
         return new ValueTask<ICorthProgram>(program);
     }

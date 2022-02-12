@@ -17,6 +17,10 @@ public static class CorthTokens
         public const string Eq = "=";
         public const string Gt = ">";
         public const string Lt = "<";
+        
+        public const string If = "if";
+        public const string Else = "else";
+        public const string EndIf = "endif";
 
         public const string Str = "'";
         public const string True = "True";
@@ -42,6 +46,10 @@ public static class CorthTokens
     public static CorthToken Equals() => new EqualsToken();
     public static CorthToken LessThan() => new LessThanToken();
     public static CorthToken GreaterThan() => new GreaterThanToken();
+
+    public static CorthToken If() => new IfToken();
+    public static CorthToken Else() => new ElseToken();
+    public static CorthToken EndIf() => new EndIfToken();
 
     public static CorthToken String(string str) => new StringToken(str);
     public static CorthToken True() => Bool(true);

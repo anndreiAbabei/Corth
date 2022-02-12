@@ -20,7 +20,11 @@ public static class ErrorCodes
     public const int FileNotFound = 0x0000A;
     public const int CorthProgramNotLoaded = 0x000B;
     public const int InvalidEndProgram = 0x000C;
+    public const int InvalidEndBlockToken = 0x000D;
+    public const int MissingEndToken = 0x000F;
     
     public const int RuntimeOperationValueIncompatibleTypes = 0x1001;
     public const int RuntimeOperationInvalidType = 0x1002;
+    public const int RuntimeInvalidIfConstruction = 0x1003;
+    public const int RuntimeStackInvalidSize = 0x1004;
 }

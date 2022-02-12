@@ -22,7 +22,7 @@ internal static class CorthEx
             throw new FileLoadException("File does not exist");
 
         var program = new CorthProgramSource(file);
-        var runtime = await sim.Build(program, cancellationToken)
+        var runtime = await sim.Compile(program, cancellationToken)
             .ConfigureAwait(false);
         
         return runtime.Run();

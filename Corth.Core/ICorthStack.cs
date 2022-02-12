@@ -13,4 +13,7 @@ public interface ICorthStack
     void Equals();
     void GreaterThan();
     void LessThan();
+    void If(out bool result);
+    void Else();
+    void EndIf();
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using Corth.Core.Models;
 
 namespace Corth.Core.Exceptions;
 
@@ -7,6 +8,8 @@ namespace Corth.Core.Exceptions;
 public class CorthException : Exception
 {
     public virtual int Code { get; }
+    
+    public virtual FilePosition? Location { get; set; }
 
 
 

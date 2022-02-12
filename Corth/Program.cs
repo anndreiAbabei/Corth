@@ -11,6 +11,7 @@ var builder = CoconaApp.CreateBuilder();
 
 builder.Services.AddSingleton<ICorthParser, CorthParser>();
 builder.Services.AddSingleton<ICorthTokenParser, CorthTokenParser>();
+builder.Services.AddSingleton<ICorthBuilder, CorthBuilder>();
 
 builder.Services.AddSingleton<ICorthSimulator, CorthSimulator>();
 builder.Services.AddSingleton<ICorthSimulatedRuntime, CorthSimulatedRuntime>();
